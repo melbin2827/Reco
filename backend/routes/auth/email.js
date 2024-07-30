@@ -1,15 +1,16 @@
-import express from "express";
+import express from 'express';
+const router = express.Router();
+import mongoose from "mongoose";
+import User from '../../models/user.js';
 import crypto from "crypto";
 import fetch from "node-fetch";
 import sgMail from "@sendgrid/mail";
-import User from "../models/user.js";
 
-const router = express.Router();
+
+
+// Temporary storage for OTPs and emails
 const otpStorage = {};
 let tempEmail = '';
-
-// Set SendGrid API key
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 // Endpoint to send OTP
 router.post('/otp', async (req, res) => {
@@ -32,6 +33,8 @@ router.post('/otp', async (req, res) => {
   // Store the OTP temporarily
   otpStorage[email] = otp;
   tempEmail = email;
+  
+  sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
   // Email content with OTP
   const msg = {
@@ -45,7 +48,7 @@ router.post('/otp', async (req, res) => {
     await sgMail.send(msg);
     res.send({ message: 'OTP sent!' });
   } catch (error) {
-    console.error('Error sending OTP email:', error);
+    console.error(error);
     res.status(500).send({ message: 'Error sending OTP email' });
   }
 });

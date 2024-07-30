@@ -26,7 +26,7 @@ export default function EmailFrame({ className = "" }) {
   
       if (value) {
         // Form submission
-        const response = await fetch('http://localhost:4000/otp', {
+        const response = await fetch('http://localhost:4000/auth/email/otp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, recaptchaResponse: value })

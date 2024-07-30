@@ -10,7 +10,7 @@ export default function NameInput() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const response = await fetch('http://localhost:4000/update-name', {
+    const response = await fetch('http://localhost:4000/input-name', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, name })
