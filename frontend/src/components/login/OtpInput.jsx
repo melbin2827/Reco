@@ -27,10 +27,18 @@ export default function OtpInput() {
       alert(result.message);
     }
   };
+  
+  const formatEmail = (email) => {
+    const [username, domain] = email.split('@');
+    const firstPart = username.substring(0, 4);
+    return `${firstPart}...@${domain}`;
+  };
+  const displayEmail =  email ? formatEmail(email) : '';
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
+        <h3> sent to {displayEmail}</h3>
         <input
           type="text"
           placeholder="Enter OTP"
